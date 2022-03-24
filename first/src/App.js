@@ -39,6 +39,18 @@ const App = () => {
     console.log('We are in App.js');
     console.log(expense);
   }
+
+    /* NOTE
+  
+    
+              App
+            /     \
+  New Expense   Expenses
+
+  if we want to pass data between sibling elements, we lift it up from one element then we send it down with props to the other elements
+
+
+    */
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
