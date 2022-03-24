@@ -12,6 +12,7 @@ const ExpenseItem = (props) => {
   const [title, setTitle] = useState(props.title);
   // NOTES:
   // 1. each component has separate state.
+  // Initialization of an state only happens once, even though we may run this function multiple times when the state gets updated.
 
   const clickHandler = () => {
     console.log("Clicked!");
