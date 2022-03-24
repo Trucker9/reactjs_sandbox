@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // Here we are adding these properties to state, so we can pick them up later, and nothing happens to them when this function gets re-evaluated.
   // Basically we dont want to lose them.
 
@@ -65,11 +65,16 @@ const ExpenseForm = () => {
       amount: enteredAmount,
       date: new Date(enteredDate),
     };
-    console.log(expenseData);
+
+    // Saving data (a function from parent)
+    props.onSaveExpenseData(expenseData);
+    // console.log(expenseData);
+
     // Clearing input
     setEnteredAmount("");
     setEnteredDate("");
     setEnteredTitle("");
+ 
   };
 
   return (
