@@ -21,6 +21,9 @@ const Expenses = (props) => {
       />
       {props.items.map((expense) => {
         return(<ExpenseItem
+          // Key, helps react to determine which item in the list is being updated and prevents updating the whole list when only one item is being added. (performance improvements + less bugs)
+          // If we dont add key, each time that reacts wants to update the HTML, it will recreate the list. 
+          key= {expense.id}
           title={expense.title}
           amount={expense.amount}
           date={expense.date}
