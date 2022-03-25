@@ -12,6 +12,10 @@ const Expenses = (props) => {
   const filterChangeHandler = (selectedYear) => {
     setFilteredYear(selectedYear);
   };
+
+  const filteredExpenses = props.items.filter(expense => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
   console.log(props.items);
   return (
     <Card className="expenses">
@@ -19,16 +23,14 @@ const Expenses = (props) => {
         selected={filteredYear}
         onChangeFilter={filterChangeHandler}
       />
-      {props.items.map((expense) => {
-        return(<ExpenseItem
-          // Key, helps react to determine which item in the list is being updated and prevents updating the whole list when only one item is being added. (performance improvements + less bugs)
-          // If we dont add key, each time that reacts wants to update the HTML, it will recreate the list. 
-          key= {expense.id}
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
-        />);
-      })}
+      {filteredExpenses.map((expense) => (
+          <ExpenseItem
+            key={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
+          />
+        ))}
     </Card>
   );
 };
