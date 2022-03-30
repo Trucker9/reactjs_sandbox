@@ -18,10 +18,30 @@ const Login = (props) => {
   (or some parent component) re-rendered. That's why variables or state defined in component functions,
    props or functions defined in component functions have to be added as dependencies
   */
+  // useEffect(() => {
+  //   setFormIsValid(
+  //     enteredEmail.includes("@") && enteredPassword.trim().length > 6
+  //   );
+  // }, [enteredEmail, enteredPassword]);
+
+  /*
+  useEffect Usage 3: running setFormIsValid after a delay with clean-up function.(actual usage is for HTTP requests.)
+  when user stops typing for 1 second, we want to run a function
+  When useEffect returns a function we call it the clean up function. the returned function will execute in between useEffect
+  runs. or in the other words, before each useEffect except the first one. with every key stroke, dependencies change and useEffect runs. we make a setTimeOut function with 1s timer. if user types another letter, useEffect will run again and creates another setTimeout function which we dont want, so we clear the last timer in clean up and create new one. therefore after 1s from the time that user entered the last letter, we run what is in setTimeOut.
+
+  */
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes("@") && enteredPassword.trim().length > 6
-    );
+    const identifier = setTimeout(() => {
+      // console.log("Running setFormIsValid");
+      setFormIsValid(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+      );
+    }, 1000);
+    return () => {
+      // console.log("Running cleanUp");
+      clearTimeout(identifier);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
