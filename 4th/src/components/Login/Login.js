@@ -29,7 +29,6 @@ const Login = (props) => {
   when user stops typing for 1 second, we want to run a function
   When useEffect returns a function we call it the clean up function. the returned function will execute in between useEffect
   runs. or in the other words, before each useEffect except the first one. with every key stroke, dependencies change and useEffect runs. we make a setTimeOut function with 1s timer. if user types another letter, useEffect will run again and creates another setTimeout function which we dont want, so we clear the last timer in clean up and create new one. therefore after 1s from the time that user entered the last letter, we run what is in setTimeOut.
-
   */
   useEffect(() => {
     const identifier = setTimeout(() => {
@@ -43,6 +42,18 @@ const Login = (props) => {
       clearTimeout(identifier);
     };
   }, [enteredEmail, enteredPassword]);
+
+  /* 
+  useEffect summary: 
+  1. useEffect(f): f runs each time the component renders
+  2. useEffect(f, []): f runs only for the first time that components renders. 
+  3. useEffect(f, [dependency1, dependency2]): runs for each time component renders or when dependencies change.
+  4. if "f" returns a function, its clean-up function and runs between useEffect runs.
+
+  */
+
+
+
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
