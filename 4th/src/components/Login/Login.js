@@ -69,18 +69,26 @@ const Login = (props) => {
   When useEffect returns a function we call it the clean up function. the returned function will execute in between useEffect
   runs. or in the other words, before each useEffect except the first one. with every key stroke, dependencies change and useEffect runs. we make a setTimeOut function with 1s timer. if user types another letter, useEffect will run again and creates another setTimeout function which we dont want, so we clear the last timer in clean up and create new one. therefore after 1s from the time that user entered the last letter, we run what is in setTimeOut.
   */
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     // console.log("Running setFormIsValid");
-  //     setFormIsValid(
-  //       enteredEmail.includes("@") && enteredPassword.trim().length > 6
-  //     );
-  //   }, 1000);
-  //   return () => {
-  //     // console.log("Running cleanUp");
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+ 
+  const {isValid : emailIsValid} = emailState;
+  const {isValid: passwordIsValid} = passwordState;
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      /* Setting form validation like this is more secure, because at line 104 and 98, we rely on previous sates which
+       is not ideal. here we relying on those too but useEffect runs after each time that the dependencies change,
+       so we always have the latest state of those too. */
+      setFormIsValid(
+        emailState.isValid && passwordState.isValid
+      );
+    }, 1000);
+    return () => {
+      // console.log("Running cleanUp");
+      clearTimeout(identifier);
+    };
+    // There is problem here, we run useEffect each time that the state changes. this includes value changes. but we want to run
+    // useEffect each time that validity changes because we are checking for validity. so we do it like so
+  // }, [emailState, passwordState]);
+    }, [emailIsValid, passwordIsValid]);
 
   /* 
   useEffect summary: 
@@ -95,13 +103,13 @@ const Login = (props) => {
     // Triggers the reducer function and send the argument as its action.
     const action = { type: "USER_INPUT", val: event.target.value };
     dispatchEmail(action);
-    setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
+    // setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
   };
 
   const passwordChangeHandler = (event) => {
     const action = { type: "USER_INPUT", val: event.target.value };
     dispatchPassword(action);
-    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+    // setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   const validateEmailHandler = () => {
