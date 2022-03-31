@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./components/store/auth-context";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,23 +19,26 @@ function App() {
   useEffect(useEffect_function, []);
 
   const loginHandler = (email, password) => {
-    localStorage.setItem('isLoggedIn', '1');
-    
+    localStorage.setItem("isLoggedIn", "1");
+
     // This state changing tells react to change the webpage.
     setIsLoggedIn(true);
-  }
+  };
   const logoutHandler = () => {
     setIsLoggedIn(false);
   };
 
   return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+    // Now every listening component have access to data's in value prop.
+    <AuthContext.Provider
+      value={{ isLoggedIn: isLoggedIn, onLogout: logoutHandler }}
+    >
+      <MainHeader />
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}
       </main>
-    </React.Fragment>
+    </AuthContext.Provider>
   );
 }
 
