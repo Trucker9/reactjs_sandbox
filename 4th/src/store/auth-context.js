@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// First we create this object. AuthContext.Provider is the actual react Component we gonna use.
-// Anything that is wrapped in <AuthContext.Provider> </AuthContext.Provider> will have access to this context data's. 
-// We can add data to the context with value={{data}} in JSX.
 const AuthContext = React.createContext({
   isLoggedIn: false,
   onLogout: () => {},
@@ -30,7 +27,6 @@ export const AuthContextProvider = (props) => {
   };
 
   return (
-    // Using provider and value here. (watch last commit)
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
