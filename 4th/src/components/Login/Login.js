@@ -1,4 +1,10 @@
-import React, { useEffect, useReducer, useState, useContext } from 'react';
+import React, {
+  useEffect,
+  useReducer,
+  useState,
+  useContext,
+  useRef,
+} from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -54,6 +60,9 @@ const Login = () => {
     };
   }, [emailIsValid, passwordIsValid]);
 
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   const emailChangeHandler = (event) => {
     const action = { type: 'USER_INPUT', val: event.target.value };
     dispatchEmail(action);
@@ -75,7 +84,14 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    authCtx.onLogin(emailState.value, passwordState.value);
+    // We want to change the focus to the form field that is not valid when the button gets pressed and formIsValid in not true.
+    if (formIsValid) {
+      authCtx.onLogin(emailState.value, passwordState.value);
+    } else if (!emailIsValid) {
+      emailInputRef.current.activate();
+    } else {
+      passwordInputRef.includes.active();
+    }
   };
 
   const authCtx = useContext(AuthContext);
@@ -83,6 +99,7 @@ const Login = () => {
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           id="email"
           label="E-mail"
           type="email"
@@ -92,6 +109,7 @@ const Login = () => {
           onBlur={validateEmailHandler}
         />
         <Input
+          ref={passwordInputRef}
           id="password"
           label="Password"
           type="password"
@@ -102,7 +120,7 @@ const Login = () => {
         />
 
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
