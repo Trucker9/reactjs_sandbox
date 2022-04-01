@@ -5,6 +5,11 @@ import DemoOutput from './components/Demo/DemoOutput';
 import './App.css';
 
 function App() {
+  /*
+  If components runs again, will each time we get a new state ?
+  no. states attach to a component when its created and if the line below gets executed for second time, react uses the 
+  state that created before for this component. 
+  */
   const [showParagraph, setShowParagraph] = useState(false);
 
   console.log('APP RUNNING');
