@@ -36,7 +36,7 @@ function App() {
   Solution: add booleanThatMightChange to the dependencies. this tells react that we want to store the function, but
   if the dependencies changed, you have to re create this function and store it again. 
   */
-  let booleanThatMightChange = true; 
+  let booleanThatMightChange = true;
   const toggleParagraphHandler = useCallback(() => {
     if (booleanThatMightChange) {
       setShowParagraph((prevShowParagraph) => !prevShowParagraph);
@@ -62,10 +62,10 @@ function App() {
 
 export default App;
 
-
 // Summary
 // by re re rendering, the component function runs again and all it child components run again
 // we can avoid unnecessarily component runs by using memo
 // memo runs the components if props change
 // props change can happen if we pass function to the component because functions are compared with ===
 // we can avoid that with useCallback but we have to be careful about dependencies and closures.
+// Optimizing with useMemo : useCallback works for function. but what if had an array ? go watch section 12 video 11
