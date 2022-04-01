@@ -15,11 +15,27 @@ function App() {
   now when Reacts compares toggleParagraphHandlers from last run and current run, they are the same. so nothing changes
   from Button component and it wont get re evaluated because it has React.memo()
   useCallback gets another argument, array of dependencies similar to useEffect.
-   with it being empty, we tell React that the toggleParagraphHandler
+  with it being empty, we tell React that the toggleParagraphHandler
   never will change and always use what you've saved in memory.
   */
+  // const toggleParagraphHandler = useCallback(() => {
+  //   setShowParagraph((prevShowParagraph) => !prevShowParagraph);
+  // });
+
+  /* We now function have closures.
+  Here it means that when the toggleParagraph handler is created by Java script, a copy of "booleanThatMightChange" will
+  be stored in it as well due to closures.
+  So if we now apply useCallback here, this function will be created once, and the value of booleanThatMightChange will remain
+  the same as the time when toggleParagraphHandler was created. now if we change the boolean in some state for example,
+  it wont make any difference.
+  Solution: add booleanThatMightChange to the dependencies. this tells react that we want to store the function, but
+  if the dependencies changed, you have to re create this function and store it again. 
+  */
+  let booleanThatMightChange = true; 
   const toggleParagraphHandler = useCallback(() => {
-    setShowParagraph((prevShowParagraph) => !prevShowParagraph);
+    if (booleanThatMightChange) {
+      setShowParagraph((prevShowParagraph) => !prevShowParagraph);
+    }
   });
 
   return (
