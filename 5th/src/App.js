@@ -56,3 +56,11 @@ function App() {
 }
 
 export default App;
+
+
+// Summary
+// by re re rendering, the component function runs again and all it child components run again
+// we can avoid unnecessarily component runs by using memo
+// memo runs the components if props change
+// props change can happen if we pass function to the component because functions are compared with ===
+// we can avoid that with useCallback but we have to be careful about dependencies and closures.
