@@ -14,5 +14,7 @@ const Button = (props) => {
     </button>
   );
 };
-
-export default Button;
+// NOTE: this causes overhead of comparing.
+// we usually use this when we now a component is not going to change often like this button.
+// NOTE: if DemoOutput is not changing, its not running then MyParagraph is not running either.
+export default React.memo(Button);
