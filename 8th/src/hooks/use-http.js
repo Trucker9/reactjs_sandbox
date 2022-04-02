@@ -8,9 +8,9 @@ const useHttp = (reqCfg, handleData) => {
     setError(null);
     try {
       const response = await fetch(reqCfg.url, {
-        method: reqCfg.method,
-        headers: reqCfg.headers,
-        body: JSON.stringify(reqCfg.body),
+        method: reqCfg.method ? reqCfg.method : 'GET',
+        headers: reqCfg.headers ? reqCfg.headers : {},
+        body: reqCfg.body ? JSON.stringify(reqCfg.body) : null,
       });
 
       if (!response.ok) {
@@ -28,7 +28,7 @@ const useHttp = (reqCfg, handleData) => {
   };
 
   // We need these back at the component that used "useHttp" so we are returning them
-  return {isLoading, error, sendReq}
+  return { isLoading, error, sendReq };
 };
 
 export default useHttp;
