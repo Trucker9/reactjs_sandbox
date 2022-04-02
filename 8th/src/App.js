@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
@@ -6,13 +6,14 @@ import useHttp from './hooks/use-http';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const transformTasks = (taskObj) => {
+  const transformTasks = useCallback((taskObj) => {
     const loadedTasks = [];
     for (const taskKey in taskObj) {
       loadedTasks.push({ id: taskKey, text: taskObj[taskKey].text });
     }
     setTasks(loadedTasks);
-  };
+    // No dependencies needed. Note that setTasks is guaranteed to never change.
+  },[]);
 
   const {isLoading, error, sendReq: fetchTasks} = useHttp(
     {
