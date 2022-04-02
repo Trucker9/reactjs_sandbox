@@ -13,17 +13,14 @@ function App() {
     }
     setTasks(loadedTasks);
     // No dependencies needed. Note that setTasks is guaranteed to never change.
-  },[]);
+  }, []);
 
-  const {isLoading, error, sendReq: fetchTasks} = useHttp(
-    {
-      url: 'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app//tasks.json',
-    },
-    transformTasks
-  );
+  const { isLoading, error, sendReq: fetchTasks } = useHttp(transformTasks);
 
   useEffect(() => {
-    fetchTasks();
+    fetchTasks({
+      url: 'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app//tasks.json',
+    });
     // Here if we add fetchTasks to the dependencies, we will create infinite loop.
     /* first time fetchTasks runs, it fetchTasks are some states which are tied to App
     AKA the component that used the custom hook.

@@ -1,10 +1,10 @@
 import { useState, useCallback} from 'react';
 
-const useHttp = (reqCfg, handleData) => {
+const useHttp = ( handleData) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendReq = useCallback(async () => {
+  const sendReq = useCallback(async (reqCfg) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -31,7 +31,7 @@ const useHttp = (reqCfg, handleData) => {
   But we have to make sure that back in the App component, AKA the component that used
   this hook, all these dependencies wont be recreated each time App runs
   */
-   [reqCfg, handleData]);
+   [handleData]);
 
   // We need these back at the component that used "useHttp" so we are returning them
   return { isLoading, error, sendReq };
