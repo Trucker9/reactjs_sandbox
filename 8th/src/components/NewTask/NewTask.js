@@ -12,7 +12,8 @@ const NewTask = (props) => {
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json',
+        // Here we have some code duplication.
+        'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app//tasks.json',
         {
           method: 'POST',
           body: JSON.stringify({ text: taskText }),
