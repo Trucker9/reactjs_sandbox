@@ -38,16 +38,17 @@ function App() {
       // fetch API doesn't throw JS error. we do it manually
 
       // Transforming API data to match our code.
-      const transformedMovies = data.results.map((el) => {
-        return {
-          id: el.episode_id,
-          title: el.title,
-          openingText: el.opening_crawl,
-          releaseDate: el.release_date,
-        };
-      });
+      const loadedMovies = [];
+      for(const key in data){
+        loadedMovies.push({
+          id:key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate
+        })
+      }
       // Changing state.
-      setMovies(transformedMovies);
+      setMovies(loadedMovies);
     } catch (error) {
       setError(error.message);
     }
