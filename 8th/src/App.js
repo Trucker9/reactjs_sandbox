@@ -23,7 +23,17 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+    // Here if we add fetchTasks to the dependencies, we will create infinite loop.
+    /* first time fetchTasks runs, it fetchTasks are some states which are tied to App
+    AKA the component that used the custom hook.
+    fetchTasks changes those states, causing the App to run again.
+    by running the App for the "n"th time, the custom hook will be called again.
+    in that custom hook we will re create sendReq function, and returning that
+    new function here.
+    That returned function is fetchTask, so it changes and causes the useEffect 
+    to trigger.
+    */
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
