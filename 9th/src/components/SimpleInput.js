@@ -16,21 +16,25 @@ const SimpleInput = (props) => {
    totally its not a good practice to say nameIsValid when its empty (logically) */
   const [nameIsValid, setNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  
+
   // if its touched and is invalid, we show the error message.
   const nameIsInvalid = !nameIsValid && enteredNameTouched;
 
   const nameInChangeHandler = (e) => {
     setEnteredName(e.target.value);
+    // Let's say we showed the user that the input is invalid and he starts to change it.
+    // As soon as he enters something valid, we want to remove the error.
+    // Note, state changes won't happen immediately, so changing the state in the line above and using it here is not correct.
+    if (e.target.value.trim() !== '') {
+      setNameIsValid(true);
+    }
   };
 
   const nameInputBlurHandler = () => {
     setEnteredNameTouched(true);
     if (enteredName.trim() === '') {
       setNameIsValid(false);
-      return;
     }
-    setNameIsValid(true);
   };
 
   const formSubmissionHandler = (e) => {
@@ -43,7 +47,7 @@ const SimpleInput = (props) => {
       return;
     }
     setNameIsValid(true);
-    
+
     setEnteredName('');
   };
 
