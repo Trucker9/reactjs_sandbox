@@ -1,60 +1,38 @@
 import { useRef, useState } from 'react';
 
 const SimpleInput = (props) => {
-  /*   // If we want to use the value once, we can use useRef.
-  const nameInRef = useRef();
-  const formSubmissionHandler = (e) => {
-    e.preventDefault();
-    console.log(nameInRef.current.value);
-  };
-*/
-  // For using input with every key stroke for example validation, its better to use state.
-  // We have better control with state
   const [enteredName, setEnteredName] = useState('');
-  /* This causes a problem. if we use useEffect and check if(nameIsValid) {},
-   at the beginning, although we have no input, we execute the if block!
-   totally its not a good practice to say nameIsValid when its empty (logically) */
-  const [nameIsValid, setNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  // if its touched and is invalid, we show the error message.
-  const nameIsInvalid = !nameIsValid && enteredNameTouched;
+  // We simply check for these two.
+  const name_IsValid = enteredName.trim() !== '';
+  const name_touchedInvalid = !name_IsValid && enteredNameTouched;
 
   const nameInChangeHandler = (e) => {
+    // Re evaluate in every key stroke.
     setEnteredName(e.target.value);
-    // Let's say we showed the user that the input is invalid and he starts to change it.
-    // As soon as he enters something valid, we want to remove the error.
-    // Note, state changes won't happen immediately, so changing the state in the line above and using it here is not correct.
-    if (e.target.value.trim() !== '') {
-      setNameIsValid(true);
-    }
   };
 
   const nameInputBlurHandler = () => {
     setEnteredNameTouched(true);
-    if (enteredName.trim() === '') {
-      setNameIsValid(false);
-    }
   };
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
-
     setEnteredNameTouched(true);
-
-    if (enteredName.trim() === '') {
-      setNameIsValid(false);
-      return;
-    }
-    setNameIsValid(true);
-
+    if (!name_IsValid) return;
+    // Resetting after submission
     setEnteredName('');
+    setEnteredNameTouched(false);
   };
 
+  const formClass = name_touchedInvalid
+    ? 'form-control invalid'
+    : 'form-control';
+    
   return (
     <form>
-      {/* If name is invalid we add 'invalid' class.*/}
-      <div className={`form-control ${nameIsInvalid && 'invalid'}`}>
+      <div className={formClass}>
         <label htmlFor="name">Your Name</label>
         <input
           //  ref={nameInRef}
@@ -66,7 +44,7 @@ const SimpleInput = (props) => {
           value={enteredName}
         />
       </div>
-      {!nameIsInvalid ? '' : <p className="error-text">Invalid name</p>}
+      {name_touchedInvalid ? <p className="error-text">Invalid name</p> : ''}
       <div className="form-actions">
         <button onClick={formSubmissionHandler}>Submit</button>
       </div>
