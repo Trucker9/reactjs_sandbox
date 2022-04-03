@@ -11,18 +11,31 @@ const SimpleInput = (props) => {
   // For using input with every key stroke for example validation, its better to use state.
   // We have better control with state
   const [enteredName, setEnteredName] = useState('');
+  const [nameIsValid, setNameIsValid] = useState(true);
+
   const nameInChangeHandler = (e) => {
     setEnteredName(e.target.value);
   };
+
   const formSubmissionHandler = (e) => {
     e.preventDefault();
+
+    if (enteredName.trim() === '') {
+      setNameIsValid(false);
+      return;
+    }
+
+    setNameIsValid(true);
+
     console.log(enteredName);
+
     setEnteredName('');
   };
 
   return (
     <form>
-      <div className="form-control">
+      {/* If name is invalid we add 'invalid' class.*/}
+      <div className={`form-control ${!nameIsValid && 'invalid'}`}>
         <label htmlFor="name">Your Name</label>
         <input
           //  ref={nameInRef}
@@ -33,6 +46,7 @@ const SimpleInput = (props) => {
           value={enteredName}
         />
       </div>
+      {nameIsValid ? '' : <p className="error-text">Invalid name</p>}
       <div className="form-actions">
         <button onClick={formSubmissionHandler}>Submit</button>
       </div>
