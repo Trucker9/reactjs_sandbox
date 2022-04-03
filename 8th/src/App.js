@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
@@ -6,21 +6,24 @@ import useHttp from './hooks/use-http';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const transformTasks = useCallback((taskObj) => {
-    const loadedTasks = [];
-    for (const taskKey in taskObj) {
-      loadedTasks.push({ id: taskKey, text: taskObj[taskKey].text });
-    }
-    setTasks(loadedTasks);
-    // No dependencies needed. Note that setTasks is guaranteed to never change.
-  }, []);
-
-  const { isLoading, error, sendReq: fetchTasks } = useHttp(transformTasks);
+  const { isLoading, error, sendReq: fetchTasks } = useHttp();
 
   useEffect(() => {
-    fetchTasks({
-      url: 'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app//tasks.json',
-    });
+    const transformTasks = (taskObj) => {
+      const loadedTasks = [];
+      for (const taskKey in taskObj) {
+        loadedTasks.push({ id: taskKey, text: taskObj[taskKey].text });
+      }
+      console.log(loadedTasks);
+      setTasks(loadedTasks);
+      // No dependencies needed. Note that setTasks is guaranteed to never change.
+    };
+    fetchTasks(
+      {
+        url: 'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app//tasks.json',
+      },
+      transformTasks
+    );
     // Here if we add fetchTasks to the dependencies, we will create infinite loop.
     /* first time fetchTasks runs, it fetchTasks are some states which are tied to App
     AKA the component that used the custom hook.
