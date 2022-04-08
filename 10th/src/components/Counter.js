@@ -1,5 +1,6 @@
 // we Extract the data we need from store with useSelector. we dont use the whole store.
 import { useSelector, useDispatch } from 'react-redux';
+import { counterAction } from '../store';
 
 import classes from './Counter.module.css';
 
@@ -19,18 +20,21 @@ const Counter = () => {
 
   const showCounter = useSelector((state) => state.showCounter);
   const incHandler = () => {
-    const action = { type: 'INCREMENT' };
-    dispatch(action);
+    dispatch(counterAction.increment());
   };
   const decHandler = () => {
-    const action = { type: 'DECREMENT' };
-    dispatch(action);
+    dispatch(counterAction.decrement);
   };
   const IncreaseHandler = () => {
-    dispatch({ type: 'INCREMENT', by: 5 });
+    // What counterAction.increase(5) return?
+    /* {
+      type: 'SOME_UNIQUE_ID',
+      payload: 'argument of reducer we chose',
+    }*/
+    dispatch(counterAction.increase(5));
   };
   const toggleCounterHandler = () => {
-    dispatch({ type: 'TOGGLE' });
+    dispatch(counterAction.toggleCounter());
   };
   return (
     <main className={classes.counter}>

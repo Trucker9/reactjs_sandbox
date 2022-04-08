@@ -22,7 +22,7 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increase(state, action) {
-      state.counter = state.counter + action.by;
+      state.counter = state.counter + action.payload;
     },
     toggleCounter(state, action) {
       state.showCounter = !state.showCounter;
@@ -35,9 +35,14 @@ const counterSlice = createSlice({
 
 // If we had more than one slice, we have multiple reducer objects to add to store.
 // but note that redux always wants one "reducer" object containing all of our reducer methods.
-// We need to create out store like this, all of reducer objects that we pass as "reducer" object properties, are object containing reducer methods. 
+// We need to create out store like this, all of reducer objects that we pass as "reducer" object properties, are object containing reducer methods.
+// in chon yeki bood kar nakard. majbooram avazesh konam. inja yedoone reducer darim hamoono midim be store.
 const store = configureStore({
-  reducer: { counter: counterSlice },
+  // reducer: { counter: counterSlice.reducer },
+  reducer: counterSlice.reducer,
 });
+
+// This object contains our reducer methods and we can use them safely.
+export const counterAction = counterSlice.actions;
 
 export default store;
