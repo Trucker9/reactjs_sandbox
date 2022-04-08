@@ -8,6 +8,7 @@ const statesObj = {
   counter: 0,
 };
 // Reducer Function that is responsible for changing store.
+// NOTE: There is an important redux rule. WE SHOULD NEVER MUTATE THE STATE OBJECT AND RETURN IT. always should return a brand new obj.
 const counterReducer = (existingState = statesObj, action) => {
   if (action.type === 'INCREMENT' && action.by)
     return {
