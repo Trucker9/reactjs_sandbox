@@ -1,14 +1,13 @@
+// There is a problem using redux like this.
+// In bigger apps, this file and its duties will get significantly larger and its hard to maintain. 
+// So we use redux tool kit
 import { createStore } from 'redux';
 
-// Default state values
 const statesObj = {
-  // each data that we want to save as an state, should be added here.
-  // when a data changes in the store (some data of this obj), the subscribed components will be updated.
   showCounter: true,
   counter: 0,
 };
-// Reducer Function that is responsible for changing store.
-// NOTE: There is an important redux rule. WE SHOULD NEVER MUTATE THE STATE OBJECT AND RETURN IT. always should return a brand new obj.
+
 const counterReducer = (existingState = statesObj, action) => {
   if (action.type === 'INCREMENT' && action.by)
     return {
@@ -30,7 +29,7 @@ const counterReducer = (existingState = statesObj, action) => {
 
   return existingState;
 };
-// Creating store and giving access to its reducer function.
+
 const store = createStore(counterReducer);
 
 export default store;
