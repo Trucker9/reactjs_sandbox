@@ -17,7 +17,7 @@ const Counter = () => {
   // if we unmount this component, the subscription will be removed automatically.
   const counterValue = useSelector(extractorFn);
 
-  const toggleCounterHandler = () => {};
+  const showCounter = useSelector((state) => state.showCounter);
   const incHandler = () => {
     const action = { type: 'INCREMENT' };
     dispatch(action);
@@ -29,10 +29,13 @@ const Counter = () => {
   const IncreaseHandler = () => {
     dispatch({ type: 'INCREMENT', by: 5 });
   };
+  const toggleCounterHandler = () => {
+    dispatch({ type: 'TOGGLE' });
+  };
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>-- {counterValue} --</div>
+      {showCounter && <div className={classes.value}>-- {counterValue} --</div>}
       <div>
         <button onClick={incHandler}>Increment</button>
         <button onClick={IncreaseHandler}>Increase by 5</button>
