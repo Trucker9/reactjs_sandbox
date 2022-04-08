@@ -8,7 +8,6 @@ const Counter = () => {
 
   // This function gets the whole state and returns what we are interested in.
   const extractorFn = (state) => {
- 
     return state.counter;
   };
   // Extracting data from store with useSelector and extractorFn.
@@ -27,12 +26,16 @@ const Counter = () => {
     const action = { type: 'DECREMENT' };
     dispatch(action);
   };
+  const IncreaseHandler = () => {
+    dispatch({ type: 'INCREMENT', by: 5 });
+  };
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
       <div className={classes.value}>-- {counterValue} --</div>
       <div>
         <button onClick={incHandler}>Increment</button>
+        <button onClick={IncreaseHandler}>Increase by 5</button>
         <button onClick={decHandler}>decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
