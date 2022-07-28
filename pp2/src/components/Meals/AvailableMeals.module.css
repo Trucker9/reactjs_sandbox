@@ -22,3 +22,12 @@
     transform: translateY(0);
   }
 }
+
+.meal-loading {
+  color: white;
+  text-align: center;
+}
+.meal-err {
+  color: red;
+  text-align: center;
+}
