@@ -1,11 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
+import Checkout from './Checkout';
 import classes from './Cart.module.css';
 import CardContext from '../../store/cart-context';
 
 const Cart = (props) => {
+  const [showForm, setShowForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
+
   const cartCtx = useContext(CardContext);
 
   const hasItems = cartCtx.items.length > 0;
@@ -36,6 +42,40 @@ const Cart = (props) => {
     </ul>
   );
 
+  const checkoutBtnHandler = () => {
+    setShowForm(true);
+  };
+  const cancelSubmitHandler = () => {
+    setShowForm(false);
+  };
+
+  const orderHandler = async (userData) => {
+    setIsSubmitting(true);
+   await fetch(
+      'https://react-course-4b234-default-rtdb.europe-west1.firebasedatabase.app/in.json',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          user: userData,
+          order: cartCtx.items,
+        }),
+      }
+    );
+    setIsSubmitting(false);
+  };
+  const modalActions = (
+    <div className={classes.actions}>
+      <button className={classes['button--alt']} onClick={props.onClose}>
+        Close
+      </button>
+      {hasItems && (
+        <button className={classes.button} onClick={checkoutBtnHandler}>
+          Checkout
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <Modal onClick={props.onClose}>
       {cartItems}
@@ -43,12 +83,10 @@ const Cart = (props) => {
         <span>Total amount</span>
         <span> {totalAmount} </span>
       </div>
-      <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClose}>
-          Close
-        </button>
-        {hasItems && <button className={classes.button}>Checkout</button>}
-      </div>
+      {showForm && (
+        <Checkout onClose={cancelSubmitHandler} onSubmitOrder={orderHandler} />
+      )}
+      {!showForm && modalActions}
     </Modal>
   );
 };
