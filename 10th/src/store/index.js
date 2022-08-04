@@ -2,7 +2,7 @@
 // In bigger apps, this file and its duties will get significantly larger and its hard to maintain.
 // So we use redux tool kit
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { createStore } from 'redux';
+
 
 const initialState = {
   showCounter: true,
