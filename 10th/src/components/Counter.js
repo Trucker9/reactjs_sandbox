@@ -7,18 +7,14 @@ import classes from './Counter.module.css';
 const Counter = () => {
   const dispatch = useDispatch();
 
-  // This function gets the whole state and returns what we are interested in.
-  const extractorFn = (state) => {
-    return state.counter;
-  };
-  // Extracting data from store with useSelector and extractorFn.
-  // useSelector automatically subscribes this component to the store.
-  // by subscribing, whenever the counter (or generally the data) changes in the redux store, the component will be updated with the latest value.
-  // Changes to the redux store will cause this component to run again and show the latest counter.
-  // if we unmount this component, the subscription will be removed automatically.
-  const counterValue = useSelector(extractorFn);
+  /*
+   state -> redux store 
+    counter -> counter slice (this is the key of the slice that we passed its reducer object to configureStore)
+    counter -> value of "counter" variable in slice
+  */
+  const counterValue = useSelector((state) => state.counter.counter);
+  const showCounter = useSelector((state) => state.counter.showCounter);
 
-  const showCounter = useSelector((state) => state.showCounter);
   const incHandler = () => {
     dispatch(counterAction.increment());
   };
