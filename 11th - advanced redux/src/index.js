@@ -29,5 +29,16 @@ ReactDOM.render(
 *   a) you can use the actions from the slice by useDispatch() hook and importing the actions. (to change state of
 *      the slice)
 *   b) you can use the state data from the slice by useSelector().
+*
+*
+*
+
+* ADVANCED REDUX WITH SIDE EFFECTS:
+* so, reducer functions must be pure functions.
+*  1. they must not mutate the state. they must return a new state.( we circle around this by redux-toolkit).
+*  2. they must not have side effects. they must not call any external APIs. (no fetching data)
+*     What do we do? we can put our side effects in two places:
+*       a) action creators.
+*       b) components.
 
 * */
