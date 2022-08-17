@@ -50,3 +50,10 @@ function App() {
 }
 
 export default App;
+
+/*
+* redux dev tools: https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en
+* super compatible with redux toolkit
+*
+*
+* */
