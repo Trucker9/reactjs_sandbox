@@ -7,7 +7,6 @@ function App() {
     return (
         <div>
             <MainHeader/>
-            {/* now welcome will only be visible if the url is /welcome */}
             <Route exact path="/welcome">
                 <Welcome/>
             </Route>

@@ -1,18 +1,15 @@
 import {Link} from "react-router-dom";
+import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
     return (
-        <header>
+        <header className={classes.header}>
             <nav>
                 <ul>
                     <li>
-                        {/* This way, every link click is a new start to the app!
-                        <a href="/welcome">Welcome </a>*/}
-                        {/* Link component manually changes the url and prevent browser defaults */}
                         <Link to="/welcome">Welcome</Link>
                     </li>
                     <li>
-                        {/*<a href="/products">products </a>*/}
                         <Link to="/products">products</Link>
                     </li>
                 </ul>
