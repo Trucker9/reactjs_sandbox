@@ -1,20 +1,26 @@
 import {Route} from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
 import MainHeader from "./components/MainHeader";
 
 function App() {
     return (
         <div>
-            <MainHeader/>
-            <Route exact path="/welcome">
-                <Welcome/>
-            </Route>
+            <main>
+                <MainHeader/>
+                <Route path="/welcome">
+                    <Welcome/>
+                </Route>
 
-            <Route exact path="/products">
-                <Products/>
-            </Route>
-
+                <Route path="/products">
+                    <Products/>
+                </Route>
+                {/* productId is the variable we are going to use in <ProductDetails> */}
+                <Route path="/product-details/:productId">
+                    <ProductDetails/>
+                </Route>
+            </main>
         </div>
     );
 }
