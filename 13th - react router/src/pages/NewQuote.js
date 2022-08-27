@@ -1,22 +1,26 @@
 import QuoteForm from '../components/quotes/QuoteForm';
 import {useHistory} from "react-router-dom";
 
+import useHttp from "../hooks/use-http";
+import {addQuote} from "../lib/api";
+import {useEffect} from "react";
 
 const NewQuote = () => {
-
-    // we can use this hook to manipulate browser history.
-    // history.push(); & history.replace(); are functions to redirect the user. with push(); we can go back with back
-    // button
+    const {sendRequest, status} = useHttp(addQuote);
     const history = useHistory();
 
+    useEffect(() => {
+        if (status === 'completed') {
+            history.push('/quotes');
+        }
+    }, [status, history]);
+
+
     const addQuoteHandler = (quoteData) => {
-
-
-        console.log(quoteData);
-        history.push('/quotes');
+        sendRequest(quoteData);
     };
 
-    return (<QuoteForm onAddQuote={addQuoteHandler}/>);
+    return (<QuoteForm isLoading={status === 'pending'} onAddQuote={addQuoteHandler}/>);
 };
 
 export default NewQuote;
