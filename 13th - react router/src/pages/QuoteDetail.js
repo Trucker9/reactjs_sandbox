@@ -1,5 +1,5 @@
 import {Fragment, useEffect} from 'react';
-import {useParams, Route, Link} from 'react-router-dom';
+import {useParams, Route, Link, useRouteMatch} from 'react-router-dom';
 
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
 import Comments from '../components/comments/Comments';
@@ -9,6 +9,7 @@ import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 
 const QuoteDetail = () => {
+    const match = useRouteMatch();
 
     const params = useParams();
     const {sendRequest, data: quote, status, err} = useHttp(getSingleQuote);
@@ -40,15 +41,15 @@ const QuoteDetail = () => {
 
             <HighlightedQuote text={quote.text} author={quote.author}/>
 
-            <Route path={`/quotes/${params.quoteId}/comments`}>
+            <Route path={`${match.path}/comments`}>
                 <Comments/>
             </Route>
             {/*
             Rendering "comments" button conditionally based on url.
             */}
-            <Route path={`/quotes/${params.quoteId}/`} exact>
+            <Route path={`${match.url}/`} exact>
                 <div className='centered'>
-                    <Link to={`/quotes/${params.quoteId}/comments`} className={'btn--flat'}> Load Comments </Link>
+                    <Link to={`${match.path}/comments`} className={'btn--flat'}> Load Comments </Link>
                 </div>
 
             </Route>

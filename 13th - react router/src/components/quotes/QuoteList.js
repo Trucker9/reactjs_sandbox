@@ -25,8 +25,7 @@ const QuoteList = (props) => {
 
     function changeSortingHandler() {
         // Using useHistory() hook to change the url (also component re-renders)
-        history.push('/quotes?sort=' + (isSortingAsc ? 'desc' : 'asc'));
-
+        history.push({pathname: location.pathname, search: `?sort=${isSortingAsc ? 'desc' : 'asc'}`})
     }
 
     sortQuotes(props.quotes, isSortingAsc);
