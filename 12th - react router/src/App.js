@@ -1,43 +1,41 @@
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import MainHeader from "./components/MainHeader";
 
 function App() {
+
+    // useHistory is replaced with useNavigate
+    // const navigate = useNavigate();
+    // navigate.('somewhere', {replace: true});
+    // navigate(-2); // go back 2 pages
+    // navigate(1); // go forward 1 page
+
+    // <Prompt> is gone
+
     return (
-        /*       the path we defined below means that the app will render <Products/>  whenever a path
-                 STARTS with "/products". so the component will be rendered for "/products/:productId" as well
-
-               --- <Route path="/products">
-               ---     <Products/>
-               --- </Route>
-               --- <Route path="/products/:productId">
-               ---     <ProductDetails/>
-               --- </Route>
-
-               the <Switch> component will render only the first component that matches the path
-               the "exact" prop makes sure that the component is rendered only for the exact path
-                  */
         <div>
             <MainHeader/>
             <main>
-                <Switch>
+                <Routes>
 
-                    <Route exact path="/">
-                        <Redirect to="/welcome"/>
-                    </Route>
+                    {/*
+                    react-router will look for the best match of these routes.
+                    ordering in not important. see docs I guess.
+                    */}
+                    <Route path="/" element={<Navigate replace to="/welcome"/>}/>
 
-                    <Route exact path="/welcome">
-                        <Welcome/>
+                    {/* The route below only works for exact path like "/welcome". we have a nested route in welcome
+                     page, for that to work, we need to add "/*" */}
+                    <Route path="/welcome/*" element={<Welcome/>}>
+                        {/* the url is already "/welcome" ser we just add what we need more */}
+                        <Route path="userId" element={<p> user component</p>}/>
                     </Route>
-                    <Route path="/products">
-                        <Products/>
-                    </Route>
-                    <Route path="/products/:productId">
-                        <ProductDetails/>
-                    </Route>
-                </Switch>
+                    <Route path="/products" element={<Products/>}/>
+                    <Route path="/products/:productId" element={<ProductDetails/>}/>
+
+                </Routes>
             </main>
         </div>
     );

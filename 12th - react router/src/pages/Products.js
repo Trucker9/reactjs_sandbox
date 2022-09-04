@@ -1,6 +1,8 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Products = () => {
+
+
     return (
         <section>
             <h1>Products page</h1>
@@ -16,7 +18,6 @@ const Products = () => {
                 </li>
             </ul>
         </section>
-
     )
 }
 
