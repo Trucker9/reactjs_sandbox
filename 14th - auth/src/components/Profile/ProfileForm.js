@@ -1,6 +1,7 @@
 import classes from './ProfileForm.module.css';
 import {useContext, useRef} from "react";
 import AuthContext from "../../store/auth-context";
+import {useHistory} from "react-router-dom";
 
 const ProfileForm = () => {
     const newPassword = useRef();
@@ -25,7 +26,9 @@ const ProfileForm = () => {
             });
             console.log(res);
             if (res.ok) {
+
                 const data = await res.json();
+                useHistory().replace('/');
                 console.log(data);
             } else {
                 // error handling here

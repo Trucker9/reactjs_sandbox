@@ -2,6 +2,7 @@ import {useState, useRef, useContext} from 'react';
 
 import classes from './AuthForm.module.css';
 import AuthContext from "../../store/auth-context";
+import {useHistory} from "react-router-dom";
 
 const firebaseSignUp = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDyv5g4w6QhxD-TvUuXjesci6Tmv_6Y9II';
 const firebaseSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyv5g4w6QhxD-TvUuXjesci6Tmv_6Y9II'
@@ -46,6 +47,7 @@ const AuthForm = () => {
             if (res.ok) {
                 const data = await res.json();
                 authCtx.login(data.idToken);
+                useHistory().replace('/');
                 console.log(data);
             } else {
                 const data = await res.json();
