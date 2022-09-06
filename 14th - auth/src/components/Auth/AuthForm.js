@@ -10,6 +10,8 @@ const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+    const history = useHistory();
+
     const authCtx = useContext(AuthContext);
 
     const emailRef = useRef();
@@ -47,7 +49,7 @@ const AuthForm = () => {
             if (res.ok) {
                 const data = await res.json();
                 authCtx.login(data.idToken);
-                useHistory().replace('/');
+                history.replace('/');
                 console.log(data);
             } else {
                 const data = await res.json();

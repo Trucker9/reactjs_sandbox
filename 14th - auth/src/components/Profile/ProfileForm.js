@@ -7,6 +7,8 @@ const ProfileForm = () => {
     const newPassword = useRef();
     const authCtx = useContext(AuthContext);
 
+    const history = useHistory();
+
     const submitHandler = async (event) => {
         event.preventDefault();
         const enteredNewPassword = newPassword.current.value;
@@ -28,7 +30,7 @@ const ProfileForm = () => {
             if (res.ok) {
 
                 const data = await res.json();
-                useHistory().replace('/');
+                history.replace('/');
                 console.log(data);
             } else {
                 // error handling here
