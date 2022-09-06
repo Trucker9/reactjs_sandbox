@@ -1,12 +1,16 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useContext} from 'react';
 
 import classes from './AuthForm.module.css';
+import AuthContext from "../../store/auth-context";
 
 const firebaseSignUp = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDyv5g4w6QhxD-TvUuXjesci6Tmv_6Y9II';
 const firebaseSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyv5g4w6QhxD-TvUuXjesci6Tmv_6Y9II'
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+    const authCtx = useContext(AuthContext);
+
     const emailRef = useRef();
     const passwordRef = useRef();
 
@@ -41,8 +45,8 @@ const AuthForm = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                console.log(data)
-                return data;
+                authCtx.login(data.idToken);
+                console.log(data);
             } else {
                 const data = await res.json();
                 let errorMessage = 'Authentication failed!';
