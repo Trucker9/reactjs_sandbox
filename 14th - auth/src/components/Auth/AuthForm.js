@@ -48,7 +48,9 @@ const AuthForm = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                authCtx.login(data.idToken);
+
+                const expirationTime = new Date(new Date().getTime() + (+data.expiresIn * 1000));
+                authCtx.login(data.idToken, expirationTime.toISOString());
                 history.replace('/');
                 console.log(data);
             } else {
