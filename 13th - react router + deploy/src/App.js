@@ -2,9 +2,10 @@
 // memo: learned previously
 // lazy: here
 
+// Build by: npm run build
+
 
 import {Route, Switch, Redirect} from "react-router-dom";
-import AllQuotes from "./pages/AllQuotes";
 import Layout from "./components/layout/Layout";
 import React, {Suspense} from "react";
 
