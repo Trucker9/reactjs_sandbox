@@ -4,6 +4,10 @@
 
 // Build by: npm run build
 
+// deployment: we have to configure server such as it ignores all the requests and send all the requests to index.html
+// index.html is the entry point of our React app. so, it will load our React app and then react router will take
+// care of the rest.
+
 
 import {Route, Switch, Redirect} from "react-router-dom";
 import Layout from "./components/layout/Layout";
